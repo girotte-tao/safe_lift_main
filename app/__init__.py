@@ -1,12 +1,15 @@
 from flask import Flask
 from werkzeug.utils import import_string
 import glob
+from app.webSocket.hello_ws import setup_socketio
+
 
 from app.models.db import db
 
 app = Flask(__name__)
 app.config.from_object('config')  # 导入配置文件
-db.init_app(app)
+socketio = setup_socketio(app)
+# db.init_app(app)
 
 # 动态注册路由，api文件命名规范
 apis = glob.glob('app/HTTPapis/*Api.py')

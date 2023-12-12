@@ -1,7 +1,5 @@
-from app import app, db
+from app import app, db, socketio
 
 if __name__ == '__main__':
-    # 启动flask
-    with app.app_context():
-        db.create_all()
-        app.run()
+    socketio.run(app, allow_unsafe_werkzeug=True)
+
