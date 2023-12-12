@@ -9,7 +9,7 @@ app.config.from_object('config')  # 导入配置文件
 db.init_app(app)
 
 # 动态注册路由，api文件命名规范
-apis = glob.glob('app/apis/*Api.py')
+apis = glob.glob('app/HTTPapis/*Api.py')
 
 for api in apis:
     module_name = api.replace('/', '.').rstrip('.py')
