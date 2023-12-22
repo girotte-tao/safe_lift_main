@@ -14,6 +14,6 @@ def setup_socketio(app):
     @socketio.on('message')
     def handle_message(message):
         print('Received message:', message)
-        emit('message', 'Message received!')
+        emit('message', 'Message received!: ' + message)
 
     return socketio
