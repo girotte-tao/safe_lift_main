@@ -1,7 +1,7 @@
 from flask import Flask
 from werkzeug.utils import import_string
 import glob
-from app.webSocket.hello_ws import setup_socketio
+from app.webSocket.wsSetup import setup_socketio
 
 
 from app.models.db import db
