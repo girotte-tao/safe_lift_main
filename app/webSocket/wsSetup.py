@@ -20,11 +20,7 @@ def setup_socketio(app):
 
     @socketio.on('message')
     def handle_message(message):
-        print('Received message:', message)
         emit('message', 'Message received!: ' + message)
-        print('emit to uwb')
-        # emit('uwb', 'Message received!: ' + 'uwb', broadcast=True)
-        # emit('uwb', 'Message received!: ' + message, namespace='/uwb')
 
         all_status = handle_uwb_status(message, uwb_manager)
         if all_status:
