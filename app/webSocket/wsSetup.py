@@ -27,11 +27,8 @@ def setup_socketio(app):
             print('emit all_status', all_status)
             emit('uwb', json.dumps(all_status), broadcast=True)
 
-    # @socketio.on('uwb', namespace='/uwb')
     @socketio.on('uwb')
     def handle_uwb_message(message):
-        print('uwb'+message)
-        print('Received message:', message)
-        emit('uwb', 'Message received!: ' + message)
+        emit('uwb', 'Message received!: ' + message, namespace='/ws')
 
     return socketio
