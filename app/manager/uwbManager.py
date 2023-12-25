@@ -23,4 +23,8 @@ class UWBManager:
 
     def get_all_statuses(self):
         # 返回所有UWB的状态列表，每个元素是一个包含tag_id和status的字典
-        return [{"tag_id": tag_id, "status": status} for tag_id, status in self.uwb_status.items()]
+        uwb_info = [{"tag_id": tag_id, "status": status} for tag_id, status in self.uwb_status.items()]
+        return {
+            'col_inf': [{"tag_id": tag_id, "status": status} for tag_id, status in self.uwb_status.items()],
+            'length': len(uwb_info)
+        }
