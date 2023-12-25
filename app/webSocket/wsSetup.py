@@ -10,17 +10,17 @@ def setup_socketio(app):
     socketio = SocketIO(app, cors_allowed_origins="*")
     uwb_manager = UWBManager(socketio.emit)
 
-    @socketio.on('connect')
+    @socketio.on('connect', namespace='/ws')
     def handle_connect():
         print('Client connected')
 
-    @socketio.on('disconnect')
+    @socketio.on('disconnect', namespace='/ws')
     def handle_disconnect():
         print('Client disconnected')
 
-    @socketio.on('message')
+    @socketio.on('message', namespace='/ws')
     def handle_message(message):
-        emit('message', 'Message received!: ' + message)
+        emit('message', 'Message received!: ' + message, namespace='/ws')
 
         all_status = handle_uwb_status(message, uwb_manager)
         if all_status:
