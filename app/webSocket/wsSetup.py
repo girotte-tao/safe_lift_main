@@ -4,6 +4,7 @@ from flask_socketio import SocketIO, emit
 
 from app.manager.uwbManager import UWBManager
 from app.webSocket.uwbHandler import handle_uwb_status
+from app.webSocket.lidar_handler import handle_lidar_message
 
 
 def setup_socketio(app):
@@ -30,5 +31,29 @@ def setup_socketio(app):
     @socketio.on('uwb')
     def handle_uwb_message(message):
         emit('uwb', 'Message received!: ' + message, namespace='/ws')
+
+    @socketio.on('uwb_message', namespace='/ws')
+    def handle_message(message):
+        emit('uwb_message', 'Message received!: ' + message, namespace='/ws')
+
+        all_status = handle_uwb_status(message, uwb_manager)
+        if all_status:
+            print('emit all_status', all_status)
+            emit('uwb', json.dumps(all_status), broadcast=True)
+
+    @socketio.on('lidar_message', namespace='/ws')
+    def handle_message(message):
+        emit('lidar_message', 'lidar message received!: ' + message, namespace='/ws')
+
+        lidar_message = handle_lidar_message(message)
+        if lidar_message:
+            emit('lidar', json.dumps(lidar_message), broadcast=True)
+
+    @socketio.on('lidar')
+    def handle_uwb_message(message):
+        emit('lidar', 'Message received!: ' + message, namespace='/ws')
+
+
+
 
     return socketio
