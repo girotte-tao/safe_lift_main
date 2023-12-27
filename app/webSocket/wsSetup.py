@@ -28,8 +28,8 @@ def setup_socketio(app):
             print('emit all_status', all_status)
             emit('uwb', json.dumps(all_status), broadcast=True)
 
-    @socketio.on('uwb')
-    def handle_uwb_message(message):
+    @socketio.on('uwb', namespace='/ws')
+    def response_uwb_message(message):
         emit('uwb', 'Message received!: ' + message, namespace='/ws')
 
     @socketio.on('uwb_message', namespace='/ws')
@@ -42,15 +42,15 @@ def setup_socketio(app):
             emit('uwb', json.dumps(all_status), broadcast=True)
 
     @socketio.on('lidar_message', namespace='/ws')
-    def handle_message(message):
+    def response_message(message):
         emit('lidar_message', 'lidar message received!: ' + message, namespace='/ws')
 
         lidar_message = handle_lidar_message(message)
         if lidar_message:
             emit('lidar', json.dumps(lidar_message), broadcast=True)
 
-    @socketio.on('lidar')
-    def handle_uwb_message(message):
+    @socketio.on('lidar', namespace='/ws')
+    def response_lidar_message(message):
         emit('lidar', 'Message received!: ' + message, namespace='/ws')
 
 
