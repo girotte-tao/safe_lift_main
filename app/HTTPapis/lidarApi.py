@@ -9,5 +9,5 @@ api = Blueprint('lidar_api', __name__)
 def get_lidar_data():
     data = request.get_json()
     lidar_data = data.get('data')
-    socketio.emit('lidar', lidar_data, namespace='/ws')
-    return lidar_data
+    socketio.emit('lidar', data, namespace='/ws')
+    return data
